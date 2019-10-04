@@ -1,40 +1,42 @@
 const express = require("express");
 const path = require("path");
-
+const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
-const app = express();
-var yoda = {
-    name: "Yoda",
-    role: "Jedi Master",
-    age: 900,
-    forcePoints: 2000
-  };
-  
-  var darthmaul = {
-    name: "Darth Maul",
-    role: "Sith Lord",
-    age: 200,
-    forcePoints: 1200
-  };
 
+
+const reservationList = [];
+const waitList = [];
+const fullList = {reservationList,waitList}
 
 app.get("/",(req,res) => {
-    res.send("hello there pal");
+    res.sendFile(path.join(_dirname,"home.html"));
+});
+app.get("/reserve",(req,res) => {
+    res.sendFile(path.join(_dirname,"reserve.html"));
+});
+app.get("/table",(req,res) => {
+    res.sendFile(path.join(_dirname,"table.html"));
 });
 
 app.get("/api/:list",(req,res) => {
-    const api = req.params
-    res.json(api);
-});
-
-app.get("/uwu",(req,res) => {
-    res.send("hello there pal");
+    const api = req.params.list;
+    res.json(fullList[api]);
 });
 
 
+app.post("/api/list",(req,res) => {
+    const reservation = req.body;
+    if (reservationList.length < 6){
+        reservationList.push(reservation)
+    }else{
+        waitList.push(reservation)
+    }
+    res.json(reservation)
+
+})
 
 
 
