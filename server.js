@@ -12,13 +12,13 @@ const waitList = [];
 const fullList = {reservationList,waitList}
 
 app.get("/",(req,res) => {
-    res.sendFile(path.join(_dirname,"home.html"));
+    res.sendFile(path.join(__dirname,"home.html"));
 });
 app.get("/reserve",(req,res) => {
-    res.sendFile(path.join(_dirname,"reserve.html"));
+    res.sendFile(path.join(__dirname,"reserve.html"));
 });
-app.get("/table",(req,res) => {
-    res.sendFile(path.join(_dirname,"table.html"));
+app.get("/tables",(req,res) => {
+    res.sendFile(path.join(__dirname,"tables.html"));
 });
 
 app.get("/api/:list",(req,res) => {
