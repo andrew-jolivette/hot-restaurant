@@ -21,7 +21,7 @@ app.get("/tables",(req,res) => {
     res.sendFile(path.join(__dirname,"tables.html"));
 });
 
-app.get("/api/:list",(req,res) => {
+app.get("/api/tables/:list",(req,res) => {
     const api = req.params.list;
     res.json(fullList[api]);
 });
@@ -38,7 +38,19 @@ app.post("/api/list",(req,res) => {
 
 })
 
-
+app.post("/api/remove/:id", (req, res) => {
+    const remove = req.body.id
+    for(let i = 0; i < reservationList.length; i++){
+        if (remove === reservationList[i].id){
+            reservationList.splice(i, 1);
+            if(waitList.length > 0){
+                reservationList.push(waitList[0]);
+                waitList.splice(0, 1);
+            }
+        }
+    }
+    res.json(`ID-${remove} Removed!`);
+});
 
 
 
